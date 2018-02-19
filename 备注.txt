@@ -1,0 +1,6 @@
+升级weex-vue-reader组件
+修改首页 象 http://dotwe.org/vue/0a5c7a10bb9fc9c0dfb2e1dbc81f526a
+发现问题: 官网的web页可以触发点击事件(光标是圆点)
+而我本地web不能触发,估计是打包时的版本不同或处理不同, 在html页上.
+因为两者的js页单独打开都不能触发
+手机扫码看正常

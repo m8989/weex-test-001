@@ -113,16 +113,20 @@ const webConfig = {
       test: /\.vue(\?[^?]+)?$/,
       use: [{
         loader: 'vue-loader',
-        options: Object.assign(vueLoaderConfig({useVue: true, usePostCSS: false}), {
+        options: Object.assign(vueLoaderConfig({useVue: true, usePostCSS: true}), {
           /**
            * important! should use postTransformNode to add $processStyle for
            * inline style prefixing.
            */
           optimizeSSR: false,
           compilerModules: [{
+            // postTransformNode: el => {
+            //   el.staticStyle = `$processStyle(${el.staticStyle})`
+            //   el.styleBinding = `$processStyle(${el.styleBinding})`
+            // }
             postTransformNode: el => {
-              el.staticStyle = `$processStyle(${el.staticStyle})`
-              el.styleBinding = `$processStyle(${el.styleBinding})`
+              // to convert vnode for weex components. 升级了weex-vue-reader后要加,否则$processStyle报错
+              require('weex-vue-precompiler')()(el)
             }
           }]
         })
