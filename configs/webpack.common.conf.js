@@ -29,9 +29,12 @@ const getEntryFileContent = (entryPath, vueFilePath) => {
     entryContents = entryContents.replace(/weex\.init/, match => `${contents}${match}`);
     contents = ''
   }
-  contents += `\nconst App = require('${relativeVuePath}');\n`;
-  contents += `App.el = '#root';\n`;
-  contents += `new Vue(App);\n`;
+//hiaming增加VUE-Router插件
+  contents += `\r\nconst App = require('${relativeVuePath}');\r\n`;
+  contents += `//App.el = '#root';\r\n`;
+  contents += `//new Vue(App);\r\n`;
+  contents += `//import router from '@/router.js';\r\n`;
+  contents += `new Vue(Vue.util.extend({el:'#root', router},App));\r\n`;
   // console.log(entryContents)
   return entryContents + contents;
 }
