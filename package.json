@@ -27,6 +27,7 @@
   "author": "李宗明 <m8989@qq.com>",
   "license": "MIT",
   "dependencies": {
+    "path-to-regexp": "^2.1.0",
     "vue": "^2.5.11",
     "vue-router": "^3.0.1",
     "weex-html5": "^0.4.1",

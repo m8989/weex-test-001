@@ -1,6 +1,7 @@
 import Vue from 'vue';
-import router from '@/router.js'
 import weex from 'weex-vue-render';
+import router from '@/router.js'
+
 
 // import render-core.
 // import weex from 'weex-vue-render/dist/index.core';
@@ -14,9 +15,9 @@ import weex from 'weex-vue-render';
 // weex.install(slider);
 // weex.install(stream);
 
-//注册全局过滤器 mixins. 好象手机扫描调试不生效
-import mixins from '@/mixins.js'
-Vue.mixin(mixins)
+// //注册全局过滤器 mixins. 好象手机扫描调试不生效
+// import mixins from '@/mixins.js'
+// Vue.mixin(mixins)
 
 // //注册全局过滤器
 // import * as filters from '@/filters'

@@ -25,7 +25,7 @@
 <script>
 //import weex from 'weex-vue-render';
 import { WxcButton } from 'weex-ui';
-import router from './router.js';
+import myrouter from './auto-router.js';
 var navigator = weex.requireModule('navigator');
 var modal = weex.requireModule('modal');
 //import mixins from './mixins.js'
@@ -48,16 +48,7 @@ export default {
        * */
       console.warn("后退");
       const self = this;
-      if (WXEnvironment.platform == "Web") {
-        this.$router.back();
-      } else {
-        console.warn("要用原生后退" + url);
-        navigator.pop({
-          animated: "true"
-        }, event => {
-          modal.toast({ message: 'callback: ' + event })
-        })
-      }
+      myrouter.back(this);
 
       // //const nativeEvent = weex.requireModule('nativeEvent');//native端必须扩展这个模块才能正常运行
       // let go = to => {
@@ -79,18 +70,15 @@ export default {
         return;
       }
       const self = this;
-      if (WXEnvironment.platform == "Web") {
-        this.$router.push(url);
-      } else {
-        console.warn("要用原生跳转到" + url);
-        navigator.push({
-          url: this.nativeUrl(url),
-          animated: "true"
-        }, event => {
-          modal.toast({ message: 'callback: ' + event })
-        })
-      }
-
+      // var modal = weex.requireModule('modal')
+      // modal.toast({
+      //   message: '跳到'+ JSON.stringify(url),
+      //   duration: 5.3
+      // })
+      //console.warn("============================");
+      //console.warn(this.$myrouter);
+      //this.$myrouter.push(url);
+      myrouter.push(this, url);
       // //const nativeEvent = weex.requireModule('nativeEvent');//native端必须扩展这个模块才能正常运行
       // let go = to => {
       //     self.$router.push(to);
@@ -99,48 +87,37 @@ export default {
       // url.indexOf('http') == 0 && url.indexOf('/#/') > 0 && go(url.substr(url.indexOf('#') + 1)); //运维添加的链接
       // //url.indexOf('http') == 0 && url.indexOf('/#/') == -1 && nativeEvent.skip(url); //原生页面//native端必须扩展这个模块才能正常运行
     },
-    /**
-     * 用相对URL 生成原生使用的URL
-     * @param {*} url 
-     */
-    nativeUrl(url) {
-      //const curUrl = weex.config.bundleUrl;//看当前js的路径
-      const basePath = 'http://192.168.0.99:8081/dist/pages';//替换成你电脑的IP，并保证手机能访问到电脑(连同一个wifi就好啦)
-      if (url.indexOf('/') == 0) { //开发者定义跳转
-        let js = `${basePath}${url}.js`;
-        url = js + '?_wx_tpl=' + js;
-      }
-      return url;
-    },
-    vueUrl(url) {
-      if (url.indexOf('http') == 0 && url.indexOf('?_wx_tpl=') > 0) { //http开头,又有 ?_wx_tpl= 是完整的链接
-        url = url.substr(url.indexOf('?_wx_tpl=') + 9);
-        if (url.indexOf('/dist') == 0) { //开发者定义跳转
-          url = url.substr(url.indexOf('/dist') + 5);
-        }
-      }
-      return url;
-    }
+
   },
   created() {
     console.error("载入了App-index");
+    // var modal = weex.requireModule('modal')
+    // modal.toast({
+    //   message: '跳到'+ JSON.stringify(url),
+    //   duration: 5.3
+    // })
+
     var modal = weex.requireModule('modal')
     modal.toast({
-        message: 'This is a toast',
-        duration: 0.3
+      message: '进到mounted' + JSON.stringify(WXEnvironment),
+      duration: 2.3
     })
-
-    console.warn(this.$router);
     console.log("WXEnvironment", WXEnvironment);
     if (WXEnvironment.platform == "Web") {
       this.$router.push('/')
     } else {
-      console.warn("要用原生跳转到" + url);
-      this.go('/hpome/page1');
+      //console.warn("要用原生跳转到" + url);
+      //myrouter.push(this,'/home/page1');
+      this.go('/home/page1');
     }
-    console.warn(this.go);
 
+  },
+  mounted() {
+
+
+    //console.warn(this.go);
   }
+
 }
 
 </script>

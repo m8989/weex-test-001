@@ -20,7 +20,7 @@
 import Vue from 'vue'
 
 import { WxcButton } from 'weex-ui'
-//import router from '../router.js'
+import myrouter from '../../auto-router.js';
 
 //import mixins from '../../mixins.js'
 //// register global mixins.
@@ -42,13 +42,15 @@ export default {
   },
   components: { WxcButton },
   methods: {
-    // jump(url) {
-    //   console.warn("跳到"+url );
-    //   this.$router.push(url)
-    // },
+    goback(url) {
+      myrouter.back(this);
+    },
+    go(url) {
+      myrouter.push(this, url);
+    },
     wxcButtonClicked(url) {
       console.warn("bt跳到"+url );
-      this.jump(url);
+      this.go(url);
     }
   },
   created() {
