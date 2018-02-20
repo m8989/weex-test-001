@@ -5,11 +5,11 @@
   </div>
   <div class="panel">
 
-    <text @click="jump('/home/page2')">
+    <text @click="go('/home/page2')">
     跳到第二页。
     </text>
-    <text @click="jump()">
-      Profile
+    <text @click="goback()">
+      后退
       </text>
     <wxc-button text="跳到第二页。" @wxcButtonClicked="wxcButtonClicked('/home/page2')"></wxc-button>
   </div>
@@ -22,16 +22,16 @@ import Vue from 'vue'
 import { WxcButton } from 'weex-ui'
 //import router from '../router.js'
 
-//import mixins from '../mixins.js'
+//import mixins from '../../mixins.js'
 //// register global mixins.
 //import mixins from '../mixins'
 //Vue.mixin(mixins)
 
 //const stream = weex.requireModule('stream')
-function createURL(hash) {
-  const url = `http://dotwe.org/raw/dist/${hash}.bundle.wx`
-  return `${url}?_wx_tpl=${url}`
-}
+// function createURL(hash) {
+//   const url = `http://dotwe.org/raw/dist/${hash}.bundle.wx`
+//   return `${url}?_wx_tpl=${url}`
+// }
 export default {
   //mixins:[mixins],
   data() {
@@ -42,10 +42,10 @@ export default {
   },
   components: { WxcButton },
   methods: {
-    jump(url) {
-      console.warn("跳到"+url );
-      this.$router.push(url)
-    },
+    // jump(url) {
+    //   console.warn("跳到"+url );
+    //   this.$router.push(url)
+    // },
     wxcButtonClicked(url) {
       console.warn("bt跳到"+url );
       this.jump(url);

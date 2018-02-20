@@ -1,19 +1,19 @@
 <template>
   <div class="panel">
-  <div class="panel">
-    <text>这是第二页</text>
-  </div>
-  <div class="panel">
+    <div class="panel">
+      <text>这是第二页</text>
+    </div>
+    <div class="panel">
 
-    <text @click="jump('/home/page1')">
-    跳到第1页。
-    </text>
-    <text @click="jump('/')">
-      Home
+      <text @click="jump('/home/page1')">
+        跳到第1页。
       </text>
-    <wxc-button text="跳到第1页" @wxcButtonClicked="wxcButtonClicked('/home/page1')"></wxc-button>
+      <text @click="goback()">
+        后退
+      </text>
+      <wxc-button text="跳到第1页" @wxcButtonClicked="wxcButtonClicked('/home/page1')"></wxc-button>
+    </div>
   </div>
- </div>
 </template>
 
 <script>
@@ -22,18 +22,18 @@ import Vue from 'vue'
 import { WxcButton } from 'weex-ui'
 //import router from '../router.js'
 
-//import mixins from '../mixins.js'
+//import mixins from '../../mixins.js'
 //// register global mixins.
 //import mixins from '../mixins'
 //Vue.mixin(mixins)
 
 //const stream = weex.requireModule('stream')
-function createURL(hash) {
-  const url = `http://dotwe.org/raw/dist/${hash}.bundle.wx`
-  return `${url}?_wx_tpl=${url}`
-}
+// function createURL(hash) {
+//   const url = `http://dotwe.org/raw/dist/${hash}.bundle.wx`
+//   return `${url}?_wx_tpl=${url}`
+// }
 export default {
-  //mixins:[mixins],
+  //mixins: [mixins],
   data() {
     return {
       starCount: 'fetching...',
@@ -42,13 +42,13 @@ export default {
   },
   components: { WxcButton },
   methods: {
-    jump(url) {
-      console.warn("跳到"+url );
-      this.$router.push(url)
-      //router.push('/home/page2')
-    },
+    // jump(url) {
+    //   console.warn("跳到"+url );
+    //   this.$router.push(url)
+    //   //router.push('/home/page2')
+    // },
     wxcButtonClicked(url) {
-      console.warn("bt跳到"+url );
+      console.warn("bt跳到" + url);
       this.jump(url);
     }
   },

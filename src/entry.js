@@ -14,6 +14,16 @@ import weex from 'weex-vue-render';
 // weex.install(slider);
 // weex.install(stream);
 
+//注册全局过滤器 mixins. 好象手机扫描调试不生效
+import mixins from '@/mixins.js'
+Vue.mixin(mixins)
+
+// //注册全局过滤器
+// import * as filters from '@/filters'
+// Object.keys(filters).forEach(key => {
+//   Vue.filter(key, filters[key])
+// })
+
 weex.init(Vue);
 
 //下面部分要去configs\webpack.common.conf.js 改,每个vue页面才能都加入文件
