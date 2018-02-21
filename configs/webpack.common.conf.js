@@ -29,7 +29,7 @@ const getEntryFileContent = (entryPath, vueFilePath) => {
     entryContents = entryContents.replace(/weex\.init/, match => `${contents}${match}`);
     contents = ''
   }
-//hiaming增加VUE-Router插件
+  //hiaming增加VUE-Router插件
   contents += `\r\nconst App = require('${relativeVuePath}');\r\n`;
   contents += `App.el = '#root';\r\n`;
   contents += `//new Vue(App);\r\n`;
@@ -58,8 +58,7 @@ const getEntryFile = (dir) => {
         webEntry[name] = path.join(entryFile) + '?entry=true';
       }
       weexEntry[name] = fullpath + '?entry=true';
-    }
-    else if (stat.isDirectory() && file !== 'build' && file !== 'include') {
+    } else if (stat.isDirectory() && file !== 'build' && file !== 'include') {
       const subdir = path.join(dir, file);
       getEntryFile(subdir);
     }
@@ -78,7 +77,7 @@ const plugins = [
    * See: https://webpack.js.org/plugins/banner-plugin/
    */
   new webpack.BannerPlugin({
-    banner: '// { "framework": "Vue"} \n',
+    banner: '// { "framework": "Vue"} \n// Copyright 2018 m8989@qq.com lizongming',
     raw: true,
     exclude: 'Vue'
   })
@@ -109,39 +108,42 @@ const webConfig = {
   module: {
     // webpack 2.0 
     rules: [{
-      test: /\.js$/,
-      use: [{
-        loader: 'babel-loader'
-      }],
-      exclude: /node_modules(?!(\/|\\).*(weex).*)/
-    },
-    {
-      test: /\.vue(\?[^?]+)?$/,
-      use: [{
-        loader: 'vue-loader',
-        options: Object.assign(vueLoaderConfig({useVue: true, usePostCSS: true}), {
-          /**
-           * important! should use postTransformNode to add $processStyle for
-           * inline style prefixing.
-           */
-          optimizeSSR: false,
-          compilerModules: [{
-            // postTransformNode: el => {
-            //   el.staticStyle = `$processStyle(${el.staticStyle})`
-            //   el.styleBinding = `$processStyle(${el.styleBinding})`
-            // }
-            postTransformNode: el => {
-              // to convert vnode for weex components. 升级了weex-vue-reader后要加,否则$processStyle报错
-              require('weex-vue-precompiler')()(el)
-            }
-          }]
-        })
-      }]
-    },
-    {
-      test: /\.html$/,
-      loader: 'raw-loader'
-    }
+        test: /\.js$/,
+        use: [{
+          loader: 'babel-loader'
+        }],
+        exclude: /node_modules(?!(\/|\\).*(weex).*)/
+      },
+      {
+        test: /\.vue(\?[^?]+)?$/,
+        use: [{
+          loader: 'vue-loader',
+          options: Object.assign(vueLoaderConfig({
+            useVue: true,
+            usePostCSS: true
+          }), {
+            /**
+             * important! should use postTransformNode to add $processStyle for
+             * inline style prefixing.
+             */
+            optimizeSSR: false,
+            compilerModules: [{
+              // postTransformNode: el => {
+              //   el.staticStyle = `$processStyle(${el.staticStyle})`
+              //   el.styleBinding = `$processStyle(${el.styleBinding})`
+              // }
+              postTransformNode: el => {
+                // to convert vnode for weex components. 升级了weex-vue-reader后要加,否则$processStyle报错
+                require('weex-vue-precompiler')()(el)
+              }
+            }]
+          })
+        }]
+      },
+      {
+        test: /\.html$/,
+        loader: 'raw-loader'
+      }
     ]
   },
   /*
@@ -165,18 +167,21 @@ const weexConfig = {
    */
   module: {
     rules: [{
-      test: /\.js$/,
-      use: [{
-        loader: 'babel-loader'
-      }]
-    },
-    {
-      test: /\.vue(\?[^?]+)?$/,
-      use: [{
-        loader: 'weex-loader',
-        options: vueLoaderConfig({useVue: false})
-      }]
-    }]
+        test: /\.js$/,
+        use: [{
+          loader: 'babel-loader'
+        }]
+      },
+      {
+        test: /\.vue(\?[^?]+)?$/,
+        use: [{
+          loader: 'weex-loader',
+          options: vueLoaderConfig({
+            useVue: false
+          })
+        }]
+      }
+    ]
   },
   /*
    * Add additional plugins to the compiler.
@@ -185,11 +190,11 @@ const weexConfig = {
    */
   plugins: plugins,
   /*
-  * Include polyfills or mocks for various node stuff
-  * Description: Node configuration
-  *
-  * See: https://webpack.github.io/docs/configuration.html#node
-  */
+   * Include polyfills or mocks for various node stuff
+   * Description: Node configuration
+   *
+   * See: https://webpack.github.io/docs/configuration.html#node
+   */
   node: config.nodeConfiguration
 };
 
